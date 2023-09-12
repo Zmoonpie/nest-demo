@@ -1,12 +1,15 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, Global } from '@nestjs/common';
+import { ConfigModule } from 'nestjs-config';
+import { resolve } from 'path';
 
-import { UsersModule } from './users/users.module';
-
+import { UsersModule } from './module/users/users.module';
+import { DatabaseModule } from './module/database/database.module';
+@Global()
 @Module({
-  imports: [UsersModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.load(resolve(__dirname, 'config', '**/!(*.d).{ts,js}')),
+    UsersModule,
+    DatabaseModule,
+  ],
 })
 export class AppModule {}
