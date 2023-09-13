@@ -14,7 +14,11 @@ export class UserEntity extends BaseEntity {
   @Column({ default: 1, comment: '用户性别' })
   sex: number;
 
-  @Column({ length: 64, unique: true, comment: '用户邮箱' })
+  @Column({
+    length: 64,
+    unique: true,
+    comment: '用户邮箱',
+  })
   email: string;
 
   @Column({ length: 64, nullable: true, comment: '用户手机号' })
