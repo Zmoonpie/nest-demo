@@ -61,10 +61,4 @@ export class UserEntity extends BaseEntity {
 
   @Column({ length: 64, comment: '用户注册来源', nullable: true })
   client: string;
-
-  @Column({ comment: '用户邀请链接被点击次数', default: 0 })
-  inviteLinkCount: number;
-
-  @Column({ comment: '用户连续签到天数', default: 0 })
-  consecutiveDays: number;
 }

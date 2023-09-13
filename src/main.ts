@@ -3,7 +3,7 @@ Dotenv.config();
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { initDatabase } from './module/database/initdatabase';
+import { initDatabase } from './modules/database/initdatabase';
 
 async function bootstrap() {
   process.on('uncaughtException', function (err) {

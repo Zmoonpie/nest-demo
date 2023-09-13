@@ -2,8 +2,8 @@ import { Module, Global } from '@nestjs/common';
 import { ConfigModule } from 'nestjs-config';
 import { resolve } from 'path';
 
-import { UsersModule } from './module/users/users.module';
-import { DatabaseModule } from './module/database/database.module';
+import { UsersModule } from './modules/users/users.module';
+import { DatabaseModule } from './modules/database/database.module';
 @Global()
 @Module({
   imports: [
