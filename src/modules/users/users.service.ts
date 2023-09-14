@@ -4,6 +4,8 @@ import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection, UpdateResult, Not, Like, In } from 'typeorm';
 import { Request, Response } from 'express';
+import * as bcrypt from 'bcryptjs';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -15,10 +17,10 @@ export class UsersService {
     user: UserEntity | RegisterDto,
     req: Request,
   ): Promise<UserEntity> {
-    const { username, password } = user;
+    const { username, password, email } = user;
 
     /* 用户是否已经在系统中 */
-    const where = { username };
+    const where = [{ username }, { email }];
     const u: UserEntity = await this.userEntity.findOne({ where: where });
     if (u) {
       throw new HttpException(
@@ -27,9 +29,21 @@ export class UsersService {
       );
     }
 
+    const userInput: any = cloneDeep(user);
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    userInput.password = hashedPassword;
+
     let n: UserEntity;
 
-    n = await this.userEntity.save(user);
+    n = await this.userEntity.save(userInput);
     return n;
+  }
+
+  async findAll(): Promise<any[]> {
+    const list = await this.userEntity.find();
+    return list?.map((user) => ({
+      username: user.username,
+      email: user.email,
+    }));
   }
 }

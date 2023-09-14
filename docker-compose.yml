@@ -1,0 +1,16 @@
+version: '3'
+services:
+  node-app:
+    image: node-app-image
+    build:
+      context: ./  # 指定 Node.js 应用程序的 Dockerfile 目录
+    ports:
+      - "3000:3000"  # 将容器的 3000 端口映射到主机的 3000 端口
+    depends_on:
+      - mysql-db  # 表示 Node.js 应用程序依赖于 MySQL 服务
+
+  mysql-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql123321...
+      MYSQL_DATABASE: nestdemo
